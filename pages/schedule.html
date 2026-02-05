@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>לוח מפגשים | דמו</title>
+  <meta name="description" content="לוח מפגשים וחבילות מפגש — דמו." />
+  <meta name="theme-color" content="#0B1220" />
+  <style>
+    :root{
+      --bg:#0b1220; --surface:rgba(255,255,255,.06); --surface-2:rgba(255,255,255,.10);
+      --stroke:rgba(255,255,255,.12); --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70); --muted-2:rgba(255,255,255,.58);
+      --accent:#7EA3D5; --accent-2:#9BD6C4; --shadow:0 12px 40px rgba(0,0,0,.35);
+      --radius-lg:18px; --radius-md:14px; --radius-sm:12px; --pad:16px; --max:1080px;
+      --font:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Hebrew","Assistant","Rubik",Arial,sans-serif;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f7fb; --surface:rgba(17,24,39,.05); --surface-2:rgba(17,24,39,.08);
+        --stroke:rgba(17,24,39,.10); --text:rgba(17,24,39,.92);
+        --muted:rgba(17,24,39,.70); --muted-2:rgba(17,24,39,.55); --shadow:0 10px 30px rgba(17,24,39,.12);}
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background: radial-gradient(1200px 600px at 15% -10%, rgba(126,163,213,.35), transparent 60%),
+                  radial-gradient(900px 500px at 95% 0%, rgba(155,214,196,.25), transparent 55%),
+                  var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:3px solid rgba(126,163,213,.55);outline-offset:2px;border-radius:12px}
+    .topbar{position:sticky;top:0;z-index:50;padding:12px var(--pad);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 70%,transparent);border-bottom:1px solid var(--stroke)}
+    .topbar-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg, rgba(126,163,213,.95), rgba(155,214,196,.85));box-shadow:0 10px 30px rgba(0,0,0,.20);flex:0 0 auto}
+    .brand-title{display:grid;line-height:1.1;min-width:0}
+    .brand-title strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand-title span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;border:1px solid var(--stroke);background:var(--surface);color:var(--muted);font-size:12px;white-space:nowrap}
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent-2);box-shadow:0 0 0 4px rgba(155,214,196,.20)}
+    .wrap{max-width:var(--max);margin:0 auto;padding:calc(var(--pad) + env(safe-area-inset-top)) var(--pad) calc(88px + env(safe-area-inset-bottom))}
+    .card{background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:var(--radius-lg);padding:16px;box-shadow:0 8px 26px rgba(0,0,0,.18)}
+    @media (prefers-color-scheme: light){.card{background:rgba(255,255,255,.75)} .topbar{background:rgba(246,247,251,.72)}}
+    h1{margin:14px 0 8px 0;font-size:20px}
+    p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+    .toolbar{display:grid;gap:10px;margin-top:12px}
+    @media(min-width:720px){.toolbar{grid-template-columns:1fr 220px;align-items:center}}
+    .search{
+      display:flex;align-items:center;gap:10px;padding:12px 12px;border-radius:14px;border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);
+    }
+    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:14px}
+    .search input::placeholder{color:var(--muted-2)}
+    .select{
+      width:100%;padding:12px;border-radius:14px;border:1px solid var(--stroke);
+      background:rgba(255,255,255,.04);color:var(--text);font-size:14px;
+    }
+    .list{margin-top:12px;display:grid;gap:10px}
+    .session{
+      padding:14px;border-radius:16px;border:1px solid var(--stroke);background:rgba(255,255,255,.04);
+      display:grid;gap:8px; transition:transform .15s ease, background .15s ease, border-color .15s ease;
+      animation:fadeUp .35s ease both;
+    }
+    .session:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);border-color:rgba(126,163,213,.35)}
+    .session-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .session-title{display:grid;gap:4px}
+    .session-title strong{font-size:14px}
+    .session-title span{font-size:13px;color:var(--muted)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{font-size:12px;color:var(--muted);border:1px solid var(--stroke);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border-radius:14px;
+      border:1px solid var(--stroke);background:var(--surface);font-weight:650;font-size:13px;min-height:42px;
+      transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px);background:var(--surface-2)}
+    .btn.primary{border-color:rgba(126,163,213,.45);background:linear-gradient(135deg, rgba(126,163,213,.30), rgba(155,214,196,.14))}
+    .row-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .hint{margin-top:12px;font-size:12px;color:var(--muted-2);line-height:1.5}
+    .bottom-nav{position:fixed;left:0;right:0;bottom:0;padding:10px calc(var(--pad) + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(var(--pad) + env(safe-area-inset-left));
+      background:color-mix(in srgb,var(--bg) 75%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--stroke);z-index:60}
+    .bottom-nav .nav-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .nav-item{display:grid;place-items:center;gap:6px;padding:10px 8px;border-radius:14px;border:1px solid transparent;color:var(--muted);font-size:11px;min-height:54px}
+    .nav-item[aria-current="page"]{color:var(--text);border-color:rgba(126,163,213,.45);background:linear-gradient(135deg, rgba(126,163,213,.22), rgba(155,214,196,.10))}
+    .icon{width:22px;height:22px;opacity:.9}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="חזרה לדשבורד">
+      <div class="mark" aria-hidden="true"></div>
+      <div class="brand-title">
+        <strong>לוח מפגשים</strong>
+        <span>דמו • חבילות מפגש, הכנה ותוצרים</span>
+      </div>
+    </a>
+    <div class="chip" title="אתר דמו (לא נתונים אמיתיים)"><span class="dot" aria-hidden="true"></span><span>Demo</span></div>
+  </div>
+</header>
+
+<main class="wrap" role="main">
+  <h1>לוח מפגשים</h1>
+  <p>מצאו את המפגש הבא, עברו לחבילת המפגש, והורידו 10 דקות הכנה.</p>
+
+  <section class="card" style="margin-top:12px" aria-label="כלים לסינון">
+    <div class="toolbar">
+      <label class="search" aria-label="חיפוש">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M16.8 16.8 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <input id="q" type="search" placeholder="חיפוש לפי נושא / תגית / יעד..." autocomplete="off" />
+      </label>
+
+      <select id="filter" class="select" aria-label="סינון לפי סטטוס">
+        <option value="all">הכל</option>
+        <option value="upcoming">בקרוב</option>
+        <option value="past">עבר</option>
+      </select>
+    </div>
+
+    <div class="list" id="list" aria-label="רשימת מפגשים"></div>
+
+    <p class="hint">טיפ: בדמו הזה אפשר כבר לראות “חבילת מפגש” כעמוד נפרד עם מזהה ב־URL.</p>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="ניווט תחתון">
+  <div class="nav-inner">
+    <a class="nav-item" href="../index.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      </svg>
+      דשבורד
+    </a>
+    <a class="nav-item" href="./schedule.html" aria-current="page">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 3v3M17 3v3M4.5 8.5h15M6 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M7.5 12h3M7.5 15.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      מפגשים
+    </a>
+    <a class="nav-item" href="./network.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      הרשת
+    </a>
+    <a class="nav-item" href="./library.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6.5 4h11A2.5 2.5 0 0 1 20 6.5v13A2.5 2.5 0 0 0 17.5 17h-11A2.5 2.5 0 0 1 4 14.5v-8A2.5 2.5 0 0 1 6.5 4Z" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M6.5 17h11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      ספרייה
+    </a>
+  </div>
+</nav>
+
+<script>
+  // Demo data (will move to /data/sessions.json later)
+  const SESSIONS = [
+    {
+      id: "1",
+      when: "יום ד׳ · 18:00",
+      dateISO: "2026-02-11T18:00:00+02:00",
+      where: "ת״א · מרכז כנסים",
+      title: "בניית אמון ושפה משותפת סביב דילמות מורכבות",
+      summary: "כלים לזהות פערי אמון, לעבור משיח עמדות לשיח אינטרסים, ולבנות הסכמות עבודה.",
+      tags: ["אמון", "שיח", "מנהיגות"],
+    },
+    {
+      id: "2",
+      when: "יום ה׳ · 09:00",
+      dateISO: "2026-02-26T09:00:00+02:00",
+      where: "סיור שטח · דרום",
+      title: "למידה מבוססת שטח: איך מחברים מדיניות למציאות",
+      summary: "סיור מודרך עם משימת למידה: מיפוי בעלי עניין + תיעוד תובנות לשולחן העבודה.",
+      tags: ["שטח", "מערכות", "רשויות"],
+    },
+    {
+      id: "0",
+      when: "יום ד׳ · 18:00",
+      dateISO: "2026-01-28T18:00:00+02:00",
+      where: "זום",
+      title: "פתיחה: ממלכתיות, אחריות ושיתוף פעולה רב־מגזרי",
+      summary: "היכרות עם מסגרת התוכנית והסכם עבודה לקבוצה בטוחה.",
+      tags: ["פתיחה", "ממלכתיות", "רשת"],
+    },
+  ];
+
+  const $ = (s, r=document) => r.querySelector(s);
+
+  function isPast(dateISO){
+    const d = new Date(dateISO);
+    return d.getTime() < Date.now();
+  }
+
+  function renderList(items){
+    const list = $("#list");
+    list.innerHTML = "";
+    if (!items.length){
+      list.innerHTML = `
+        <div class="session" style="text-align:center">
+          <strong>לא נמצאו מפגשים בהתאם לסינון</strong>
+          <span>נסו מונח אחר או עברו ל״הכל״.</span>
+        </div>`;
+      return;
+    }
+
+    for (const s of items.sort((a,b)=> new Date(a.dateISO)-new Date(b.dateISO))){
+      const past = isPast(s.dateISO);
+      const statusBadge = past ? "עבר" : "בקרוב";
+      const badgeStyle = past ? "opacity:.85" : "border-color: rgba(155,214,196,.45);";
+
+      const el = document.createElement("article");
+      el.className = "session";
+      el.innerHTML = `
+        <div class="session-head">
+          <div class="session-title">
+            <strong>${escapeHtml(s.title)}</strong>
+            <span>${escapeHtml(s.when)} · ${escapeHtml(s.where)}</span>
+          </div>
+          <span class="badge" style="${badgeStyle}">${statusBadge}</span>
+        </div>
+
+        <span style="color:var(--muted);font-size:13px;line-height:1.55">${escapeHtml(s.summary)}</span>
+
+        <div class="badges">
+          ${s.tags.map(t => `<span class="badge">#${escapeHtml(t)}</span>`).join("")}
+        </div>
+
+        <div class="row-actions">
+          <a class="btn primary" href="./session.html?id=${encodeURIComponent(s.id)}">חבילת מפגש</a>
+          <a class="btn" href="./library.html">חומרים רלוונטיים</a>
+        </div>
+      `;
+      list.appendChild(el);
+    }
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function apply(){
+    const q = ($("#q").value || "").trim().toLowerCase();
+    const filter = $("#filter").value;
+
+    let items = SESSIONS.slice();
+
+    if (filter === "upcoming") items = items.filter(s => !isPast(s.dateISO));
+    if (filter === "past") items = items.filter(s => isPast(s.dateISO));
+
+    if (q){
+      items = items.filter(s => {
+        const hay = [s.title, s.summary, s.where, s.when, ...(s.tags||[])].join(" ").toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    renderList(items);
+  }
+
+  $("#q").addEventListener("input", apply);
+  $("#filter").addEventListener("change", apply);
+
+  // initial
+  renderList(SESSIONS);
+</script>
+</body>
+</html>
