@@ -1,0 +1,548 @@
+<!-- index.html (place at repo root) -->
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>מיני־סייט תוכנית מנהיגות | דמו</title>
+  <meta name="description" content="אתר דמו מלווה לתוכנית הכשרת מנהיגים בכירים ובניית רשת מבוססת אמון." />
+  <meta name="theme-color" content="#0B1220" />
+
+  <!-- Social (optional) -->
+  <meta property="og:title" content="מיני־סייט תוכנית מנהיגות | דמו" />
+  <meta property="og:description" content="דשבורד, מפגשים, חומרים והרשת — במקום אחד." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    /* =========================
+       Mobile-first, clean, pro
+       Single-file baseline (we'll split later)
+       ========================= */
+
+    :root{
+      --bg: #0b1220;
+      --surface: rgba(255,255,255,.06);
+      --surface-2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted-2: rgba(255,255,255,.58);
+      --accent: #7EA3D5; /* calm, trustworthy blue */
+      --accent-2: #9BD6C4; /* soft mint */
+      --danger: #ff5d5d;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+      --pad: 16px;
+      --max: 1080px;
+
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Hebrew", "Assistant", "Rubik", Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f6f7fb;
+        --surface: rgba(17,24,39,.05);
+        --surface-2: rgba(17,24,39,.08);
+        --stroke: rgba(17,24,39,.10);
+        --text: rgba(17,24,39,.92);
+        --muted: rgba(17,24,39,.70);
+        --muted-2: rgba(17,24,39,.55);
+        --shadow: 0 10px 30px rgba(17,24,39,.12);
+      }
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--font);
+      background: radial-gradient(1200px 600px at 15% -10%, rgba(126,163,213,.35), transparent 60%),
+                  radial-gradient(900px 500px at 95% 0%, rgba(155,214,196,.25), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible{
+      outline: 3px solid rgba(126,163,213,.55);
+      outline-offset: 2px;
+      border-radius: 12px;
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: calc(var(--pad) + env(safe-area-inset-top)) var(--pad) calc(88px + env(safe-area-inset-bottom));
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 12px var(--pad);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .topbar-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .mark{
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(126,163,213,.95), rgba(155,214,196,.85));
+      box-shadow: 0 10px 30px rgba(0,0,0,.20);
+      flex: 0 0 auto;
+    }
+    .brand-title{
+      display: grid;
+      line-height: 1.1;
+      min-width: 0;
+    }
+    .brand-title strong{
+      font-size: 14px;
+      letter-spacing: .2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-title span{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(155,214,196,.20);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .hero-inner{
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+    .hero h1{
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: .2px;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 65ch;
+    }
+    .hero-actions{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: var(--surface);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      min-height: 44px; /* mobile tap target */
+    }
+    .btn:hover{ transform: translateY(-1px); background: var(--surface-2); }
+    .btn.primary{
+      border-color: rgba(126,163,213,.45);
+      background: linear-gradient(135deg, rgba(126,163,213,.35), rgba(155,214,196,.18));
+    }
+    .btn .kbd{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--stroke);
+      border-bottom-width: 2px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Cards grid */
+    .grid{
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+    @media (min-width: 720px){
+      .hero-inner{ padding: 22px; }
+      .grid{
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+    }
+    @media (min-width: 980px){
+      .grid{ grid-template-columns: 1.15fr .85fr; }
+      .stack{ display: grid; gap: 14px; }
+    }
+
+    .card{
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: 0 8px 26px rgba(0,0,0,.18);
+    }
+    @media (prefers-color-scheme: light){
+      .card{ background: rgba(255,255,255,.75); }
+      .hero{ background: rgba(255,255,255,.85); }
+      .topbar{ background: rgba(246,247,251,.72); }
+    }
+
+    .card h2{
+      margin: 0 0 10px 0;
+      font-size: 16px;
+    }
+    .meta{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .kv{
+      display: grid;
+      gap: 6px;
+    }
+    .kv .label{
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+    .kv .value{
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .list{
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .row{
+      display: grid;
+      gap: 4px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+    }
+    .row strong{ font-size: 14px; }
+    .row span{ font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .hint{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted-2);
+      line-height: 1.5;
+    }
+
+    /* Bottom nav (mobile) */
+    .bottom-nav{
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      padding: 10px calc(var(--pad) + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(var(--pad) + env(safe-area-inset-left));
+      background: color-mix(in srgb, var(--bg) 75%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--stroke);
+      z-index: 60;
+    }
+    .bottom-nav .nav-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .nav-item{
+      display: grid;
+      place-items: center;
+      gap: 6px;
+      padding: 10px 8px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-size: 11px;
+      min-height: 54px;
+    }
+    .nav-item[aria-current="page"]{
+      color: var(--text);
+      border-color: rgba(126,163,213,.45);
+      background: linear-gradient(135deg, rgba(126,163,213,.22), rgba(155,214,196,.10));
+    }
+    .icon{
+      width: 22px; height: 22px;
+      opacity: .9;
+    }
+
+    /* Tiny helper */
+    .sr-only{
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar -->
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" aria-label="דף הבית">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brand-title">
+          <strong>תוכנית מנהיגות בכירה — דמו</strong>
+          <span>כלי מלווה לבניית רשת מבוססת אמון</span>
+        </div>
+      </a>
+
+      <div class="chip" title="אתר דמו (לא נתונים אמיתיים)">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Demo • נתונים לדוגמה</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-label="פתיח">
+      <div class="hero-inner">
+        <h1>מקום אחד למפגש הבא, לחומרים, ולרשת</h1>
+        <p>
+          זהו אתר דמו שמדגים איך כלי דיגיטלי יכול לתמוך בהכשרת מנהיגים ובכירים:
+          <strong>למידה בזמן אמת</strong>, <strong>יישום לשטח</strong>, ו־<strong>חיזוק אמון</strong> דרך רשת עמיתים.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="./pages/schedule.html">
+            לוח מפגשים
+            <span class="kbd" aria-hidden="true">↵</span>
+          </a>
+          <a class="btn" href="./pages/network.html">הרשת</a>
+          <a class="btn" href="./pages/library.html">ספרייה</a>
+          <a class="btn" href="./pages/rules.html">כללי שיח</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main grid -->
+    <section class="grid" aria-label="תוכן מרכזי">
+      <!-- Next session card -->
+      <article class="card" aria-label="המפגש הבא">
+        <h2>המפגש הבא</h2>
+
+        <div class="kv">
+          <div class="label">נושא</div>
+          <div class="value">בניית אמון ושפה משותפת סביב דילמות מורכבות</div>
+        </div>
+
+        <div class="meta">
+          <span class="chip" title="תאריך לדוגמה">יום ד׳ · 18:00</span>
+          <span class="chip" title="מיקום לדוגמה">ת״א · מרכז כנסים</span>
+          <span class="chip" id="countdownChip" title="דמו">עוד <span id="countdown">—</span></span>
+        </div>
+
+        <ul class="list" aria-label="הכנה קצרה">
+          <li class="row">
+            <strong>10 דקות הכנה</strong>
+            <span>וידאו קצר + שתי שאלות מיקוד כדי שכולנו נתחיל מאותו בסיס.</span>
+          </li>
+          <li class="row">
+            <strong>מה יוצא לי מזה היום?</strong>
+            <span>כלי פשוט לזיהוי “פערי אמון” + ניסוי קטן לשבוע הקרוב.</span>
+          </li>
+        </ul>
+
+        <div class="hero-actions" style="margin-top:12px">
+          <a class="btn primary" href="./pages/session.html?id=next">פתח/י חבילת מפגש</a>
+          <a class="btn" href="./pages/library.html">חומרים קודמים</a>
+        </div>
+
+        <p class="hint">
+          * בדמו הזה הנתונים סטטיים; בהמשך נטען אותם מקבצי JSON ונאפשר חיפוש/תיוג.
+        </p>
+      </article>
+
+      <!-- Right stack -->
+      <div class="stack">
+        <article class="card" aria-label="פעולה לשבוע הקרוב">
+          <h2>הפעולה שלך לשבוע הקרוב</h2>
+          <ul class="list">
+            <li class="row">
+              <strong>בחר/י “איש/ת אמון” מהרשת</strong>
+              <span>שיחה קצרה (15 דק׳): מה כרגע יושב “מתחת לפני השטח” בתפקיד שלך?</span>
+            </li>
+            <li class="row">
+              <strong>ניסוי קטן בשטח</strong>
+              <span>נסח/י בקול רם הנחה אחת שאת/ה בודק/ת מחדש — וראה/י מה זה משנה.</span>
+            </li>
+          </ul>
+          <div class="hero-actions" style="margin-top:12px">
+            <a class="btn" href="./pages/network.html">מצא/י חיבור</a>
+            <a class="btn" href="./pages/initiatives.html">מהלכי שינוי</a>
+          </div>
+        </article>
+
+        <article class="card" aria-label="מומלץ מהספרייה">
+          <h2>מומלץ מהספרייה</h2>
+          <ul class="list">
+            <li class="row">
+              <strong>קייס קצר: שיקום אמון בין מערכות</strong>
+              <span>מתי לבחור שקיפות מלאה ומתי לבנות “תנאים” לשיח?</span>
+            </li>
+            <li class="row">
+              <strong>תבנית: מיפוי בעלי עניין (10 דקות)</strong>
+              <span>כלי פרקטי לעבודה on-the-job, במיוחד בסוגיות 20%.</span>
+            </li>
+          </ul>
+          <div class="hero-actions" style="margin-top:12px">
+            <a class="btn" href="./pages/library.html">לכל התכנים</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="hint" style="margin-top:16px">
+      © דמו • אתר לדוגמה להצגת שילוב טכנולוגיה בהכשרת מנהיגים • אין להשתמש כמידע רשמי.
+    </footer>
+  </main>
+
+  <!-- Bottom nav (mobile-first) -->
+  <nav class="bottom-nav" aria-label="ניווט תחתון">
+    <div class="nav-inner">
+      <a class="nav-item" href="./index.html" aria-current="page">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+        דשבורד
+      </a>
+
+      <a class="nav-item" href="./pages/schedule.html">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 3v3M17 3v3M4.5 8.5h15M6 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M7.5 12h3M7.5 15.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        מפגשים
+      </a>
+
+      <a class="nav-item" href="./pages/network.html">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        הרשת
+      </a>
+
+      <a class="nav-item" href="./pages/library.html">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6.5 4h11A2.5 2.5 0 0 1 20 6.5v13A2.5 2.5 0 0 0 17.5 17h-11A2.5 2.5 0 0 1 4 14.5v-8A2.5 2.5 0 0 1 6.5 4Z" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M6.5 17h11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        ספרייה
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Minimal "countdown" for the demo (no data files yet)
+    // We'll later replace this with JSON-driven dates.
+    (function () {
+      const el = document.getElementById('countdown');
+      const chip = document.getElementById('countdownChip');
+      if (!el || !chip) return;
+
+      // Demo: next Wednesday 18:00 (local)
+      const now = new Date();
+      const target = new Date(now);
+      const day = target.getDay(); // 0 Sun .. 6 Sat
+      const daysUntilWed = (3 - day + 7) % 7 || 7; // Wed=3
+      target.setDate(target.getDate() + daysUntilWed);
+      target.setHours(18, 0, 0, 0);
+
+      function tick(){
+        const diff = target - new Date();
+        if (diff <= 0) {
+          el.textContent = "התחיל";
+          chip.style.borderColor = "rgba(155,214,196,.55)";
+          return;
+        }
+        const mins = Math.floor(diff / 60000);
+        const hours = Math.floor(mins / 60);
+        const days = Math.floor(hours / 24);
+        const rh = hours % 24;
+        const rm = mins % 60;
+
+        const parts = [];
+        if (days) parts.push(`${days} ימים`);
+        if (rh) parts.push(`${rh} שעות`);
+        parts.push(`${rm} דק׳`);
+
+        el.textContent = parts.join(" · ");
+      }
+
+      tick();
+      setInterval(tick, 30 * 1000);
+    })();
+  </script>
+</body>
+</html>
