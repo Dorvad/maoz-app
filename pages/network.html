@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>הרשת | דמו</title>
+  <meta name="description" content="דירקטורי משתתפים לחיזוק חיבורים ואמון." />
+  <meta name="theme-color" content="#0B1220" />
+  <style>
+    :root{
+      --bg:#0b1220; --surface:rgba(255,255,255,.06); --surface-2:rgba(255,255,255,.10);
+      --stroke:rgba(255,255,255,.12); --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70); --muted-2:rgba(255,255,255,.58);
+      --accent:#7EA3D5; --accent-2:#9BD6C4; --shadow:0 12px 40px rgba(0,0,0,.35);
+      --radius-lg:18px; --pad:16px; --max:1080px;
+      --font:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Hebrew","Assistant","Rubik",Arial,sans-serif;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f7fb; --surface:rgba(17,24,39,.05); --surface-2:rgba(17,24,39,.08);
+        --stroke:rgba(17,24,39,.10); --text:rgba(17,24,39,.92);
+        --muted:rgba(17,24,39,.70); --muted-2:rgba(17,24,39,.55); --shadow:0 10px 30px rgba(17,24,39,.12);}
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background: radial-gradient(1200px 600px at 15% -10%, rgba(126,163,213,.35), transparent 60%),
+                  radial-gradient(900px 500px at 95% 0%, rgba(155,214,196,.25), transparent 55%),
+                  var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:3px solid rgba(126,163,213,.55);outline-offset:2px;border-radius:12px}
+    .topbar{position:sticky;top:0;z-index:50;padding:12px var(--pad);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 70%,transparent);border-bottom:1px solid var(--stroke)}
+    .topbar-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg, rgba(126,163,213,.95), rgba(155,214,196,.85));box-shadow:0 10px 30px rgba(0,0,0,.20)}
+    .brand-title{display:grid;line-height:1.1;min-width:0}
+    .brand-title strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand-title span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;border:1px solid var(--stroke);background:var(--surface);color:var(--muted);font-size:12px;white-space:nowrap}
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent-2);box-shadow:0 0 0 4px rgba(155,214,196,.20)}
+    .wrap{max-width:var(--max);margin:0 auto;padding:calc(var(--pad) + env(safe-area-inset-top)) var(--pad) calc(88px + env(safe-area-inset-bottom))}
+    .card{background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:18px;padding:16px;box-shadow:0 8px 26px rgba(0,0,0,.18)}
+    @media (prefers-color-scheme: light){.card{background:rgba(255,255,255,.75)} .topbar{background:rgba(246,247,251,.72)}}
+    h1{margin:14px 0 8px 0;font-size:20px}
+    p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+    .toolbar{display:grid;gap:10px;margin-top:12px}
+    @media(min-width:820px){.toolbar{grid-template-columns:1fr 260px 220px;align-items:center}}
+    .search{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;border:1px solid var(--stroke);background:rgba(255,255,255,.04)}
+    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:14px}
+    .search input::placeholder{color:var(--muted-2)}
+    .select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--stroke);background:rgba(255,255,255,.04);color:var(--text);font-size:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border-radius:14px;border:1px solid var(--stroke);background:var(--surface);font-weight:650;font-size:13px;min-height:42px;transition:transform .15s ease, background .15s ease, border-color .15s ease}
+    .btn:hover{transform:translateY(-1px);background:var(--surface-2)}
+    .btn.primary{border-color:rgba(126,163,213,.45);background:linear-gradient(135deg, rgba(126,163,213,.30), rgba(155,214,196,.14))}
+    .grid{margin-top:12px;display:grid;gap:10px}
+    @media(min-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+    .person{
+      border:1px solid var(--stroke);background:rgba(255,255,255,.04);border-radius:18px;padding:14px;
+      display:grid;gap:10px;transition:transform .15s ease, background .15s ease, border-color .15s ease;
+      animation:fadeUp .35s ease both;
+    }
+    .person:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);border-color:rgba(126,163,213,.35)}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .id{display:flex;align-items:center;gap:10px;min-width:0}
+    .avatar{
+      width:42px;height:42px;border-radius:16px;border:1px solid var(--stroke);
+      background: linear-gradient(135deg, rgba(126,163,213,.25), rgba(155,214,196,.18));
+      display:grid;place-items:center;font-weight:800;color:rgba(255,255,255,.88);
+      flex:0 0 auto;
+    }
+    @media (prefers-color-scheme: light){.avatar{color:rgba(17,24,39,.78)}}
+    .who{display:grid;gap:3px;min-width:0}
+    .who strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .who span{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{font-size:12px;color:var(--muted);border:1px solid var(--stroke);background:rgba(255,255,255,.03);padding:6px 10px;border-radius:999px}
+    .hint{margin-top:12px;font-size:12px;color:var(--muted-2);line-height:1.5}
+    .bottom-nav{position:fixed;left:0;right:0;bottom:0;padding:10px calc(var(--pad) + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(var(--pad) + env(safe-area-inset-left));
+      background:color-mix(in srgb,var(--bg) 75%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--stroke);z-index:60}
+    .bottom-nav .nav-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .nav-item{display:grid;place-items:center;gap:6px;padding:10px 8px;border-radius:14px;border:1px solid transparent;color:var(--muted);font-size:11px;min-height:54px}
+    .nav-item[aria-current="page"]{color:var(--text);border-color:rgba(126,163,213,.45);background:linear-gradient(135deg, rgba(126,163,213,.22), rgba(155,214,196,.10))}
+    .icon{width:22px;height:22px;opacity:.9}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="חזרה לדשבורד">
+      <div class="mark" aria-hidden="true"></div>
+      <div class="brand-title">
+        <strong>הרשת</strong>
+        <span>דמו • חיבורים איכותיים ואמון</span>
+      </div>
+    </a>
+    <div class="chip" title="אתר דמו (לא נתונים אמיתיים)"><span class="dot" aria-hidden="true"></span><span>Demo</span></div>
+  </div>
+</header>
+
+<main class="wrap" role="main">
+  <h1>הרשת</h1>
+  <p>מצאו אנשים לפי תפקיד/תחום, ובקשו חיבור ממוקד. (בדמו – הכל מקומי, בלי שליחת הודעות אמיתית.)</p>
+
+  <section class="card" style="margin-top:12px" aria-label="כלים לחיפוש וסינון">
+    <div class="toolbar">
+      <label class="search" aria-label="חיפוש משתתפים">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M16.8 16.8 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <input id="q" type="search" placeholder="חיפוש לפי שם / תפקיד / תחום / תגית..." autocomplete="off" />
+      </label>
+
+      <select id="help" class="select" aria-label="סינון לפי יכול לעזור ב">
+        <option value="all">יכול/ה לעזור ב — הכל</option>
+        <option value="מדיניות">מדיניות</option>
+        <option value="שלטון מקומי">שלטון מקומי</option>
+        <option value="בריאות">בריאות</option>
+        <option value="חינוך">חינוך</option>
+        <option value="תעסוקה">תעסוקה</option>
+        <option value="תקשורת">תקשורת</option>
+      </select>
+
+      <button id="match" class="btn primary" type="button">מצא/י חיבור</button>
+    </div>
+
+    <div class="grid" id="grid" aria-label="רשימת משתתפים"></div>
+
+    <p class="hint">
+      רעיון “Trust by design”: בדמו אין פרטי קשר גלויים. בהמשך נוסיף הרשאות (פוד/מחזור/אישי).
+    </p>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="ניווט תחתון">
+  <div class="nav-inner">
+    <a class="nav-item" href="../index.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      </svg>
+      דשבורד
+    </a>
+    <a class="nav-item" href="./schedule.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 3v3M17 3v3M4.5 8.5h15M6 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M7.5 12h3M7.5 15.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      מפגשים
+    </a>
+    <a class="nav-item" href="./network.html" aria-current="page">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      הרשת
+    </a>
+    <a class="nav-item" href="./library.html">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6.5 4h11A2.5 2.5 0 0 1 20 6.5v13A2.5 2.5 0 0 0 17.5 17h-11A2.5 2.5 0 0 1 4 14.5v-8A2.5 2.5 0 0 1 6.5 4Z" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M6.5 17h11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      ספרייה
+    </a>
+  </div>
+</nav>
+
+<script>
+  const PEOPLE = [
+    { id:"p1", name:"תמר לוי", role:"מנהלת אגף · רשות מקומית", give:"תכנון, שותפויות, הטמעה", seek:"חיבורים בין מערכות", tags:["שלטון מקומי","מדיניות","אמון"] },
+    { id:"p2", name:"אמיר ח׳", role:"מנהל תחום · בריאות", give:"ניהול שינוי, מדידה", seek:"שיח עם שדה החינוך", tags:["בריאות","מערכות","נתונים"] },
+    { id:"p3", name:"רועי כהן", role:"סמנכ״ל · ארגון חברתי", give:"עבודה עם קהילות, פרקטיקות אמון", seek:"שותפות עם רשויות", tags:["חברה אזרחית","שלטון מקומי","אמון"] },
+    { id:"p4", name:"נועה ש׳", role:"מנהלת יחידה · חינוך", give:"פדגוגיה יישומית, שטח", seek:"קשרים עם תעסוקה", tags:["חינוך","שטח","רשת"] },
+    { id:"p5", name:"סוהא א׳", role:"מנהלת תוכנית · תעסוקה", give:"אקו־סיסטם תעסוקה, עבודה עם מעסיקים", seek:"כלים לשיח מורכב", tags:["תעסוקה","מדיניות","שיח"] },
+    { id:"p6", name:"דניאל מ׳", role:"עיתונאי/ת · תקשורת", give:"מסגור נרטיב, דוברות", seek:"דוגמאות מהשטח", tags:["תקשורת","סיפור","השפעה"] },
+  ];
+
+  const $ = (s, r=document) => r.querySelector(s);
+
+  function initials(name){
+    const parts = name.split(/\s+/).filter(Boolean);
+    const a = parts[0]?.[0] || "•";
+    const b = parts[1]?.[0] || "";
+    return (a + b).toUpperCase();
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function render(list){
+    const grid = $("#grid");
+    grid.innerHTML = "";
+    if (!list.length){
+      grid.innerHTML = `
+        <div class="person" style="text-align:center">
+          <strong>לא נמצאו תוצאות</strong>
+          <span style="color:var(--muted);font-size:13px">נסו חיפוש אחר או סינון שונה.</span>
+        </div>`;
+      return;
+    }
+
+    for (const p of list){
+      const el = document.createElement("article");
+      el.className = "person";
+      el.innerHTML = `
+        <div class="head">
+          <div class="id">
+            <div class="avatar" aria-hidden="true">${initials(p.name)}</div>
+            <div class="who">
+              <strong>${escapeHtml(p.name)}</strong>
+              <span>${escapeHtml(p.role)}</span>
+            </div>
+          </div>
+          <a class="btn" href="./participant.html?id=${encodeURIComponent(p.id)}" title="דף משתתף (נוסיף בהמשך)">פרופיל</a>
+        </div>
+
+        <div class="badges">
+          ${p.tags.map(t=>`<span class="badge">#${escapeHtml(t)}</span>`).join("")}
+        </div>
+
+        <div style="display:grid;gap:6px;color:var(--muted);font-size:13px;line-height:1.55">
+          <div><strong style="color:var(--text)">יכול/ה לתת:</strong> ${escapeHtml(p.give)}</div>
+          <div><strong style="color:var(--text)">מחפש/ת:</strong> ${escapeHtml(p.seek)}</div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn primary" type="button" data-connect="${p.id}">בקשת חיבור</button>
+          <button class="btn" type="button" data-save="${p.id}">שמור/י</button>
+        </div>
+      `;
+      grid.appendChild(el);
+    }
+  }
+
+  function apply(){
+    const q = ($("#q").value || "").trim().toLowerCase();
+    const help = $("#help").value;
+
+    let list = PEOPLE.slice();
+
+    if (help !== "all"){
+      list = list.filter(p => (p.tags || []).includes(help) || (p.give || "").includes(help));
+    }
+
+    if (q){
+      list = list.filter(p => {
+        const hay = [p.name, p.role, p.give, p.seek, ...(p.tags||[])].join(" ").toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    render(list);
+  }
+
+  // “Match” demo: picks a random person different from current filter to suggest a connection
+  function suggest(){
+    const list = PEOPLE.slice();
+    const pick = list[Math.floor(Math.random() * list.length)];
+    alert(`הצעה לחיבור:\n${pick.name} (${pick.role})\n\nלמה? תגיות: ${pick.tags.join(", ")}\n(דמו)`);
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const connectId = btn.getAttribute("data-connect");
+    const saveId = btn.getAttribute("data-save");
+
+    if (connectId){
+      const p = PEOPLE.find(x => x.id === connectId);
+      alert(`בקשת חיבור (דמו)\n\nנוסח מוצע:\n“היי ${p.name}, אשמח לשיחת 15 דק׳. מה מעניין אותי: ${p.seek}. מה אני יכול להביא: …”`);
+    }
+
+    if (saveId){
+      const key = "demo_saved_people";
+      const cur = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+      if (cur.has(saveId)) cur.delete(saveId); else cur.add(saveId);
+      localStorage.setItem(key, JSON.stringify([...cur]));
+      btn.textContent = cur.has(saveId) ? "נשמר ✅" : "שמור/י";
+      setTimeout(()=>{ btn.textContent = cur.has(saveId) ? "נשמר ✅" : "שמור/י"; }, 800);
+    }
+  });
+
+  $("#q").addEventListener("input", apply);
+  $("#help").addEventListener("change", apply);
+  $("#match").addEventListener("click", suggest);
+
+  render(PEOPLE);
+</script>
+</body>
+</html>
